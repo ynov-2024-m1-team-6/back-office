@@ -1,4 +1,5 @@
 export interface Product {
+    id?: number;
     username: string; // EnormeZboubDu92
     description: string; // Daghestanais d'origine, je me suis entrainé avec Khabib Nurmagomedov.
     price: number; // 299.99

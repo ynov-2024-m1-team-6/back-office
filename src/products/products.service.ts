@@ -11,13 +11,13 @@ export class ProductsService {
     //     return await prisma.product.findMany();
     // }
 
-    // async findOne(id: string) {
-    //     return await prisma.product.findUnique({
-    //         where: {
-    //             id,
-    //         }
-    //     });
-    // }
+    async findOne(id: number) {
+        return await prisma.product.findUnique({
+            where: {
+                id,
+            }
+        });
+    }
 
     async create(product: Product) {
         try {
