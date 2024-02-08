@@ -1,14 +1,17 @@
 import { Controller, Get, Query } from '@nestjs/common';
+import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
+    constructor(private productService: ProductsService) {}
+
     @Get('getProducts')
-    findAll(): string {
-        return 'get all products';
+    async findAll(): Promise<string> {
+        return this.productService.findAll();
     }
 
     @Get('getProduct')
     findOne(@Query('id') id) {
-        return `${id} id du produit`;
+        return this.productService.findOne(id);
     }
 }
