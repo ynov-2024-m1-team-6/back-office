@@ -1,9 +1,9 @@
 export interface Product {
-    id: string;
-    name: string;
-    description: string;
-    active : boolean;
-    thumbnail: string;
-    packshot: string;
-    price: number;
-}
+    username: string; // EnormeZboubDu92
+    description: string; // Daghestanais d'origine, je me suis entrainé avec Khabib Nurmagomedov.
+    price: number; // 299.99
+    height: number; // 185
+    weight: number; // 105
+    ratio: string; // '10-0'
+    thumbnail: string; // https://images.unsplash.com/photo-1491756975177-a13d74ed1e2f
+  }

@@ -1,13 +1,33 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { Product } from '../product/product.interface';
+
+const prisma = new PrismaClient(); 
 
 @Injectable()
 export class ProductsService {
 
-    findAll(): string {
-        return 'get all products';
-    }
+    // async findAll(): Promise<Product[]> {
+    //     return await prisma.product.findMany();
+    // }
 
-    findOne(id) {
-        return `${id} id du produit`;
+    // async findOne(id: string) {
+    //     return await prisma.product.findUnique({
+    //         where: {
+    //             id,
+    //         }
+    //     });
+    // }
+
+    async create(product: Product) {
+        try {
+            await prisma.product.create({
+                data: product
+            });
+            
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
 }
