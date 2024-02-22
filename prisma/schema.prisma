@@ -11,11 +11,10 @@ model Product {
   id          Int     @id @default(autoincrement())
   username    String
   description String
-  price       Decimal
+  price       Float
   height      Float
   weight      Float
   ratio       String
   thumbnail   String
-
-  // Ajoutez d'autres champs ou relations au besoin
+  active      Boolean @default(false)
 }
