@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsNumber, IsString, IsUrl } from 'class-validator';
 
 
@@ -61,3 +61,7 @@ export class Product {
     @IsBoolean()
     active: boolean;
 }
+
+export class CreateProduct extends OmitType(Product, ['id', 'active'] as const) {}
+
+export class UpdateProduct extends OmitType(Product, ['id', 'active'] as const) {}
