@@ -7,8 +7,20 @@ const prisma = new PrismaClient();
 @Injectable()
 export class ProductsService {
 
-    async findAll() {
-        const products = await prisma.product.findMany();
+    async findAll(filterInactive: string | undefined) {
+        const isActive = filterInactive === 'true';
+    
+        let products;
+        if (!isActive) {
+            products = await prisma.product.findMany();
+        }
+        else {
+            products = await prisma.product.findMany({
+                where: {
+                    active: true,
+                }
+            });
+        }
 
         return {
             message: products.length != 0 ? 'Products retrieved successfully' : 'No products found',
