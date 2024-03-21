@@ -8,6 +8,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Uber Bagarre API')
     .setDescription('Uber Bagarre API description')
+    .addBearerAuth()
     .setVersion('1')
     .build();
 

@@ -1,18 +1,19 @@
 import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProduct, Product, UpdateProduct } from './entities/product.entity';
-import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { isNumber } from 'class-validator';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('products')
 export class ProductsController {
     constructor(private productService: ProductsService) {}
 
     @Get('getProducts')
     @ApiOperation({ summary: 'Get all products' })
+    @ApiQuery({ name: 'filterInactive', required: true, type: 'boolean'})
     @ApiTags('products')
-    async findAll() {
-        return this.productService.findAll();
+    async findAll(@Query('filterInactive') filterInactive: string) {        
+        return this.productService.findAll(filterInactive);
     }
 
     @Get('getProduct')
