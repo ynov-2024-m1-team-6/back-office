@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common'
 import { ProductsService } from './products.service';
 import { CreateProduct, Product, UpdateProduct } from './entities/product.entity';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { isNumber } from 'class-validator';
 
 @Controller('products')
 export class ProductsController {
@@ -22,6 +23,15 @@ export class ProductsController {
         return this.productService.findOne(parseInt(id));
     }
 
+    @Get('getSpecificProduct')
+    @ApiOperation({ summary: 'Get specific product in a list of id' })
+    @ApiQuery({ name: 'id', type: 'number', isArray: true })
+    @ApiTags('products')
+    getSpecificProduct(@Query('id') id: number[]) {
+        return this.productService.GetSpecificProduct(id);
+    }   
+
+
     @Post('create')
     @ApiOperation({ summary: 'Create product' })
     @ApiBody({ type: () => CreateProduct })
@@ -36,8 +46,6 @@ export class ProductsController {
     @ApiBody({ type: () => UpdateProduct})
     @ApiTags('products')
     update(@Body() data: Product, @Query('id') id: string) {
-        console.log(data, id);
-        
         return this.productService.update(parseInt(id), data);
     }
 

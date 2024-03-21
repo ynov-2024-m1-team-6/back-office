@@ -37,6 +37,32 @@ export class ProductsService {
           };
     }
 
+    async GetSpecificProduct(id: number[]) {
+        // vérifie qu'il n'y a pas de lettre et transforme en nombre le nombre
+        const ids: number[] = id.filter(str => !isNaN(Number(str)) && str != 0).map(str => Number(str));
+        
+        try {
+            const product =  await prisma.product.findMany({
+                where: {
+                    id: {
+                        in: ids
+                    }
+                }
+            });
+    
+            return {
+                message: product != null ? 'Products found successfully' : 'Product not found',
+                data: product,
+              };
+        } catch (error) {
+            return {
+                message: 'An error occurred during product collection.',
+                data: null,
+            };
+        }
+        
+    }
+
     async create(product: Product) {
         
         // If the request body is empty, return an error message
