@@ -50,8 +50,10 @@ export class ProductsService {
     }
 
     async GetSpecificProduct(id: number[]) {
+        var ids: number[] = typeof id === 'object' 
+        ? ids = id.filter(str => !isNaN(Number(str)) && str != 0).map(str => Number(str)) 
+        : [typeof id === 'string' ? Number(id) : id];
         // vérifie qu'il n'y a pas de lettre et transforme en nombre le nombre
-        const ids: number[] = id.filter(str => !isNaN(Number(str)) && str != 0).map(str => Number(str));
         
         try {
             const product =  await prisma.product.findMany({
@@ -61,9 +63,9 @@ export class ProductsService {
                     }
                 }
             });
-    
+            
             return {
-                message: product != null ? 'Products found successfully' : 'Product not found',
+                message: product.length != 0 ? 'Products found successfully' : 'Product not found',
                 data: product,
               };
         } catch (error) {
